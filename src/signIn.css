@@ -1,0 +1,11 @@
+.make-center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.beautify{
+    background: royalblue;
+    color: white;
+    margin-bottom: 2px;
+    height: 20vh;
+}
