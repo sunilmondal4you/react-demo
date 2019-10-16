@@ -9,20 +9,26 @@ app.use(cors());
 
 app.use(bodyParser.json());
 
-let list = [];
+let list = [
+    {id:1, name:"1"},
+    {id:2, name:"2"},
+    {id:3, name:"3"},
+    {id:4, name:"4"},
+
+];
 
 app.get("/", (req, res)=>{
-    resp.json(list);
+    res.json(list);
 });
 
 app.post("/", (req, res)=>{
     let reqObj = req.body;
     if(reqObj.overwrite && reqObj.list){
         list = reqObj.list;
-        resp.json(list);
+        res.json(list);
     }else{
         list.push(reqObj);
-        resp.json(reqObj);
+        res.json(reqObj);
     }
         
 });
