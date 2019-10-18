@@ -84,6 +84,7 @@ export class AppForm extends React.Component {
                     <th>Name</th>
                     <th>Mobile</th>
                     <th>Email</th>
+                    <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -93,6 +94,10 @@ export class AppForm extends React.Component {
                       <td>{item.name}</td>
                       <td>{item.mobile}</td>
                       <td>{item.email}</td>
+                      <td>
+                        <span className="fa fa-edit IconStyle mr-2" ></span>
+                        <span className="fa fa-trash IconStyle2" color="danger"></span>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
