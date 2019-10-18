@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container, Row, Col } from 'reactstrap';
 import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { Table } from 'reactstrap';
 
 export class AppForm extends React.Component {
   constructor(props){
@@ -53,7 +54,7 @@ export class AppForm extends React.Component {
 			<div className="App pt-3">
         <Container>
           <Row>
-            <Col xs="5">
+            <Col sm="12" md="5">
               <h2 className="text-center">Data collection section:</h2>
               <Form onSubmit={e => this.handleSubmit(e, this.state.inpObj)}>
                 <FormGroup>
@@ -74,8 +75,28 @@ export class AppForm extends React.Component {
 
               </Form>
             </Col>
-            <Col xs="6">
-            
+            <Col sm="12" md="7" >
+              <h2 className="text-center mb-4">Data in tabular view</h2>
+              <Table>
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Mobile</th>
+                    <th>Email</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {this.state.list.map((item, index)=>(
+                    <tr key={index+1}>
+                      <th scope="row">{index+1}</th>
+                      <td>{item.name}</td>
+                      <td>{item.mobile}</td>
+                      <td>{item.email}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
             </Col>
           </Row>
         </Container>
