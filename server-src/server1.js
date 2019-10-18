@@ -25,12 +25,11 @@ app.post("/", (req, res)=>{
     let reqObj = req.body;
     if(reqObj.overwrite && reqObj.list){
         list = reqObj.list;
-        res.json(list);
     }else{
-        list.push(reqObj);
-        res.json(reqObj);
+        list.push(reqObj.inpObj);
     }
-        
+
+    res.json(list);
 });
 
 app.listen(3030, ()=>{
