@@ -19,10 +19,10 @@ app.get("/", (req, res)=>{
 
 app.post("/", (req, res)=>{
     let reqObj = req.body;
-    if(reqObj.overwrite && reqObj.list){
-        list = reqObj.list;
+    if(Array.isArray(reqObj.refBody)){
+        list = reqObj.refBody;
     }else{
-        list.push(reqObj.inpObj);
+        list.push(reqObj.refBody);
     }
 
     res.json(list);

@@ -2,13 +2,14 @@ import React from 'react';
 import { Container, Row, Col } from 'reactstrap';
 import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 import { Table } from 'reactstrap';
+import _lodash from 'lodash';
 
 export class AppForm extends React.Component {
   constructor(props){
     super(props);
 
     this.state = {
-      inpObj: {name:'', mobile:'', email:''},
+      inpObj: {id:'', name:'', mobile:'', email:''},
       list : [],
     };
 
@@ -26,20 +27,28 @@ export class AppForm extends React.Component {
     const getResp = await fetch('http://localhost:3030/');
     const body = await getResp.json();
     if (getResp.status !== 200) throw Error(body.message);
-    
+    _lodash.each(body, (item)=>{
+      let itemIndex = _lodash.findIndex(body, item);
+      item.id = itemIndex+1
+    })
     return body;
   };
   
-  handleSubmit = async (e, inpObj) => {
+  handleAddEdit = async (e, inpObj) => {
     e.preventDefault();
+    let refBody = inpObj;
+    if(inpObj.id){
+      refBody = this.state.list;
+      refBody[inpObj.id-1] = inpObj;
+    }
     const postResp = await fetch('http://localhost:3030/', {
       method: 'POST',
       headers: {'Content-Type': 'application/json',},
-      body: JSON.stringify({inpObj }),
+      body: JSON.stringify({refBody }),
     });
     const respBody = await postResp.json();
       if(respBody)
-        this.setState({ list: respBody , inpObj: {name:'', mobile:'', email:''}})
+        this.setState({ list: respBody , inpObj: {id:'', name:'', mobile:'', email:''}})
   };
 
   handleChange(event) {
@@ -48,6 +57,10 @@ export class AppForm extends React.Component {
     inpObj[name] = value; // so this mutates state ?
     return this.setState({inpObj});
   };
+
+  editDetail(e, item){
+    this.setState({ inpObj: item})    
+  }
   
 	render() {
 		return (
@@ -56,7 +69,7 @@ export class AppForm extends React.Component {
           <Row>
             <Col sm="12" md="5">
               <h2 className="text-center">Data collection section:</h2>
-              <Form onSubmit={e => this.handleSubmit(e, this.state.inpObj)}>
+              <Form onSubmit={e => this.handleAddEdit(e, this.state.inpObj)}>
                 <FormGroup>
                   <Label className="ml-2" for="examplename">Name</Label>
                   <Input type="text" id="examplename" name="name" value={this.state.inpObj.name} onChange={this.handleChange} placeholder="Name"/>
@@ -90,12 +103,12 @@ export class AppForm extends React.Component {
                 <tbody>
                   {this.state.list.map((item, index)=>(
                     <tr key={index+1}>
-                      <th scope="row">{index+1}</th>
+                      <th scope="row">{item.id}</th>
                       <td>{item.name}</td>
                       <td>{item.mobile}</td>
                       <td>{item.email}</td>
                       <td>
-                        <span className="fa fa-edit IconStyle mr-2" ></span>
+                        <span className="fa fa-edit IconStyle mr-2" onClick={e => this.editDetail(e, item)}></span>
                         <span className="fa fa-trash IconStyle2" color="danger"></span>
                       </td>
                     </tr>
