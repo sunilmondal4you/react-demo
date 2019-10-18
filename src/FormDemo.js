@@ -46,9 +46,13 @@ export class AppForm extends React.Component {
       headers: {'Content-Type': 'application/json',},
       body: JSON.stringify({refBody }),
     });
-    const respBody = await postResp.json();
-      if(respBody)
-        this.setState({ list: respBody , inpObj: {id:'', name:'', mobile:'', email:''}})
+    // const respBody = await postResp.json();
+    //   if(respBody)
+    //     this.setState({ list: respBody , inpObj: {id:'', name:'', mobile:'', email:''}})
+
+    this.setState({inpObj: {id:'', name:'', mobile:'', email:''}});
+    this.componentDidMount();
+
   };
 
   handleChange(event) {
