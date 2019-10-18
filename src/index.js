@@ -6,6 +6,8 @@ import * as serviceWorker from './serviceWorker';
 import {LoginControl} from './logControl';
 import {SignIn} from './SignIn'
 import {AppForm} from "./FormDemo";
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 ReactDOM.render(<AppForm />, document.getElementById('root'));
 

@@ -10,11 +10,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 let list = [
-    {id:1, name:"1"},
-    {id:2, name:"2"},
-    {id:3, name:"3"},
-    {id:4, name:"4"},
-
+    {name:"1", mobile:1,email:'1@1.com'}
 ];
 
 app.get("/", (req, res)=>{

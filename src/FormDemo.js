@@ -1,11 +1,13 @@
 import React from 'react';
+import { Container, Row, Col } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 
 export class AppForm extends React.Component {
   constructor(props){
     super(props);
 
     this.state = {
-      inpObj: {name:'', mobile:''},
+      inpObj: {name:'', mobile:'', email:''},
       list : [],
     };
 
@@ -36,7 +38,7 @@ export class AppForm extends React.Component {
     });
     const respBody = await postResp.json();
       if(respBody)
-        this.setState({ list: respBody , inpObj: {name:'', mobile:''}})
+        this.setState({ list: respBody , inpObj: {name:'', mobile:'', email:''}})
   };
 
   handleChange(event) {
@@ -48,16 +50,36 @@ export class AppForm extends React.Component {
   
 	render() {
 		return (
-			<div className="App">
-        <form onSubmit={e => this.handleSubmit(e, this.state.inpObj)}>
-          <p><strong>Post to Server:</strong></p>
-          <label>Name</label><br/>
-          <input type="text" name="name" value={this.state.inpObj.name} onChange={this.handleChange}/><br/>
+			<div className="App pt-3">
+        <Container>
+          <Row>
+            <Col xs="5">
+              <h2 className="text-center">Data collection section:</h2>
+              <Form onSubmit={e => this.handleSubmit(e, this.state.inpObj)}>
+                <FormGroup>
+                  <Label className="ml-2" for="examplename">Name</Label>
+                  <Input type="text" id="examplename" name="name" value={this.state.inpObj.name} onChange={this.handleChange} placeholder="Name"/>
+                </FormGroup>
+                <FormGroup>
+                  <Label className="ml-2" for="exampleMob">Mobile</Label>
+                  <Input type="number" id="exampleMob" name="mobile" value={this.state.inpObj.mobile} onChange={this.handleChange} placeholder="Mobile"/>
+                </FormGroup>              
+                <FormGroup>
+                  <Label className="ml-2" for="exampleEmail">Mobile</Label>
+                  <Input type="email" id="exampleEmail" name="email" value={this.state.inpObj.email} onChange={this.handleChange} placeholder="Email-id" />
+                </FormGroup>
+                <div className="col text-center">
+                  <Button type="submit" color="primary">Submit</Button>
+                </div>
 
-          <label>Mobile</label><br/>
-          <input type="number" name="mobile" value={this.state.inpObj.mobile} onChange={this.handleChange}/><br/>
-          <button type="submit">Submit</button>
-        </form>
+              </Form>
+            </Col>
+            <Col xs="6">
+            
+            </Col>
+          </Row>
+        </Container>
+        
 			</div>
 		);
 	}
