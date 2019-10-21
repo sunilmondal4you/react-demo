@@ -17,3 +17,8 @@ code {
 .IconStyle2{
   color: red
 }
+.error{
+  margin-left: 5px;
+  font-size: 13px;
+  color: red;
+}

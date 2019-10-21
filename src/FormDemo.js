@@ -11,6 +11,7 @@ export class AppForm extends React.Component {
     this.state = {
       inpObj: {id:'', name:'', mobile:'', email:''},
       list : [],
+      errors: {},
     };
 
     this.handleChange = this.handleChange.bind(this)
@@ -55,6 +56,46 @@ export class AppForm extends React.Component {
 
   };
 
+  handleValidation(){
+    let fields = this.state.inpObj;
+    let errors = {};
+    let formIsValid = true;
+
+    //Name
+    if(!fields["name"]){
+      formIsValid = false;
+      errors["name"] = "Cannot be empty";
+    }
+
+    if(typeof fields["name"] !== "undefined"){
+      if(!fields["name"].match(/^[a-zA-Z]+$/)){
+        formIsValid = false;
+        errors["name"] = "Only letters";
+      }      	
+    }
+
+    //Email
+    if(!fields["email"]){
+      formIsValid = false;
+      errors["email"] = "Cannot be empty";
+    }
+
+    if(typeof fields["email"] !== "undefined"){
+      let lastAtPos = fields["email"].lastIndexOf('@');
+      let lastDotPos = fields["email"].lastIndexOf('.');
+
+      if (!(lastAtPos < lastDotPos && lastAtPos > 0 && fields["email"].indexOf('@@') == -1 && lastDotPos > 2 && (fields["email"].length - lastDotPos) > 2)) {
+        formIsValid = false;
+        errors["email"] = "Email is not valid";
+      }
+    }
+
+
+
+    this.setState({errors: errors});
+    return formIsValid;
+  }
+
   handleChange(event) {
     const {name, value} = event.target;
     let inpObj = this.state.inpObj; // this is a reference, not a copy...
@@ -73,18 +114,21 @@ export class AppForm extends React.Component {
           <Row>
             <Col sm="12" md="5">
               <h2 className="text-center">Data collection section:</h2>
-              <Form onSubmit={e => this.handleAddEdit(e, this.state.inpObj)}>
+              <Form onSubmit={e => this.handleValidation(e, this.state.inpObj)}>
                 <FormGroup>
                   <Label className="ml-2" for="examplename">Name</Label>
-                  <Input type="text" id="examplename" name="name" value={this.state.inpObj.name} onChange={this.handleChange} placeholder="Name"/>
+                  <Input type="text" id="examplename" name="name" value={this.state.inpObj["name"]} onChange={this.handleChange} placeholder="Name"/>
+                  <span className="error">{this.state.errors["name"]}</span>
                 </FormGroup>
                 <FormGroup>
                   <Label className="ml-2" for="exampleMob">Mobile</Label>
-                  <Input type="number" id="exampleMob" name="mobile" value={this.state.inpObj.mobile} onChange={this.handleChange} placeholder="Mobile"/>
+                  <Input type="number" id="exampleMob" name="mobile" maxLength={10} value={this.state.inpObj["mobile"]} onChange={this.handleChange} placeholder="Mobile"/>
+                  <span className="error">{this.state.errors["mobile"]}</span>
                 </FormGroup>              
                 <FormGroup>
                   <Label className="ml-2" for="exampleEmail">Mobile</Label>
-                  <Input type="email" id="exampleEmail" name="email" value={this.state.inpObj.email} onChange={this.handleChange} placeholder="Email-id" />
+                  <Input type="email" id="exampleEmail" name="email" value={this.state.inpObj["email"]} onChange={this.handleChange} placeholder="Email-id" />
+                    <span className="error">{this.state.errors["email"]}</span>
                 </FormGroup>
                 <div className="col text-center">
                   <Button type="submit" color="primary">Submit</Button>
