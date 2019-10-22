@@ -114,7 +114,7 @@ export class AppForm extends React.Component {
           <Row>
             <Col sm="12" md="5">
               <h2 className="text-center">Data collection section:</h2>
-              <Form onSubmit={e => this.handleValidation(e, this.state.inpObj)}>
+              <Form onSubmit={e => this.handleAddEdit(e, this.state.inpObj)}>
                 <FormGroup>
                   <Label className="ml-2" for="examplename">Name</Label>
                   <Input type="text" id="examplename" name="name" value={this.state.inpObj["name"]} onChange={this.handleChange} placeholder="Name"/>
